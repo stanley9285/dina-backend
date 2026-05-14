@@ -2,6 +2,7 @@ services:
   - type: web
     name: dina-mcreynolds-backend
     runtime: node
+    plan: free
     buildCommand: npm install
     startCommand: npm start
     envVars:
@@ -9,8 +10,6 @@ services:
         value: production
       - key: PORT
         value: 3001
-      - key: DB_PATH
-        value: /data/dina.db
       - key: FRONTEND_URL
         sync: false
       - key: SMTP_HOST
@@ -31,7 +30,3 @@ services:
         generateValue: true
       - key: ANTHROPIC_API_KEY
         sync: false
-    disk:
-      name: dina-db
-      mountPath: /data
-      sizeGB: 1
