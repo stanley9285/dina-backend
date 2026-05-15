@@ -270,7 +270,7 @@ app.post('/api/newsletter',
 
       await sendEmail(
         email,
-        'Welcome to Dina\'s World ✨',
+        'Welcome to Dina McReynolds Everage ✨',
         `
         <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0a0a0a; padding: 40px; text-align: center;">
