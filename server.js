@@ -159,7 +159,10 @@ app.post('/api/inquiry',
     body('name').trim().isLength({ min: 2, max: 100 }).escape(),
     body('email').isEmail().normalizeEmail(),
     body('message').trim().isLength({ min: 10, max: 2000 }).escape(),
-    body('type').trim().isIn([
+    body('type').optional().trim().isIn([
+      'speaking', 'coaching', 'experiences', 'media', 'partnership', 'general'
+    ]),
+    body('subject').optional().trim().isIn([
       'speaking', 'coaching', 'experiences', 'media', 'partnership', 'general'
     ]),
     body('phone').optional().trim().isLength({ max: 30 }),
@@ -172,7 +175,12 @@ app.post('/api/inquiry',
       return res.status(400).json({ error: 'Invalid form data', details: errors.array() });
     }
 
-    const { name, email, phone, type, message, budget, timeline } = req.body;
+    if (!req.body.type && !req.body.subject) {
+      return res.status(400).json({ error: 'Invalid form data', details: [{ msg: 'type or subject is required' }] });
+    }
+
+    const { name, email, phone, message, budget, timeline } = req.body;
+    const type = req.body.type || req.body.subject || 'general';
     const ip = req.ip;
 
     const result = db.prepare(`
